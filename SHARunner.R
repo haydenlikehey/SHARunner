@@ -30,11 +30,11 @@ hash_and_diff_files <- function(directory1, directory2) {
         # Are they the same hashes?
         if (identical(container$contents1$hashes, container$contents2$hashes)) {
             # All good
-            print("All files are good 👍")
+            return("All files are good 👍")
         } else {
             # Otherwise there are issues in these files
             print("There are some files that are different!!\n See the list below:\n")
-            print(container$contents1$files[container$contents1$hashes %in% container$contents2$hashes])
+            return(container$contents1$files[container$contents1$hashes %in% container$contents2$hashes])
         }
     } else if (!identical(files1, files2)) {
         stop("Error: The file names aren't identical...")
@@ -43,8 +43,6 @@ hash_and_diff_files <- function(directory1, directory2) {
     } else {
         stop("Error: How did I get here?")
     }
-
-    return(0)
 }
 
 if (interactive()) {
@@ -52,13 +50,13 @@ if (interactive()) {
     folder1 <- readline("Provide the first directory: ")
     folder2 <- readline("Provide the second directory: ")
 
-    hash_and_diff_files(folder1, folder2)
+    print(hash_and_diff_files(folder1, folder2))
 
 } else {
     args <- commandArgs(trailingOnly = TRUE)
 
     if (length(args) == 2) {
-        hash_and_diff_files(args[1], args[2])
+        print(hash_and_diff_files(args[1], args[2]))
     } else {
         stop("Error: An incorrect number of arguments was provided, exiting.")
     }
